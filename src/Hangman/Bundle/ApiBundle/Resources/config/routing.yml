@@ -1,0 +1,4 @@
+hangman_api_hello_world:
+    path:     /hello/world
+    defaults: { _controller: HangmanApiBundle:HelloWorld:helloWorld }
+    methods:  [GET]
