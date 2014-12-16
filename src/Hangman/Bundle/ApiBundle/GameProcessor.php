@@ -21,11 +21,23 @@ class GameProcessor
     /**
      * @var array Human-friendly error messages.
      */
-    private $errorMessages = array(
-        self::ERROR_GAME_NOT_FOUND => 'Sorry, that game does not exist',
-        self::ERROR_INVALID_CHARACTER => 'Sorry, that was an invalid character',
-        self::ERROR_TRIES_DEPLETED => 'Sorry, there are no more tries left on this game',
-        self::ERROR_CHARACTER_NOT_NEW => 'Sorry, you already used that character',
+    private $errors = array(
+        self::ERROR_GAME_NOT_FOUND => array(
+            'http-code' => 404,
+            'message' => 'Sorry, that game does not exist',
+        ),
+        self::ERROR_INVALID_CHARACTER => array(
+            'http-code' => 400,
+            'message' => 'Sorry, that was an invalid character',
+        ),
+        self::ERROR_TRIES_DEPLETED => array(
+            'http-code' => 403,
+            'message' => 'Sorry, there are no more tries left on this game',
+        ),
+        self::ERROR_CHARACTER_NOT_NEW => array(
+            'http-code' => 403,
+            'message' => 'Sorry, you already used that character',
+        ),
     );
 
     /**
@@ -50,16 +62,20 @@ class GameProcessor
      *
      * @return array The formatted error.
      */
-    protected function generateError($code)
+    protected function raiseError(View $view, $code)
     {
-        return array(
+        $data = array(
             'errors' => array(
                 array(
                     'code' => $code,
-                    'message' => $this->errorMessages[$code]
+                    'message' => $this->errors[$code]['message']
                 ),
             ),
         );
+        $view->setData($data);
+        $view->setStatusCode($this->errors[$code]['http-code']);
+
+        return $view;
     }
 
     /**
@@ -77,18 +93,12 @@ class GameProcessor
     {
         // A corresponding Game must have been found
         if ($game === null) {
-            $view->setData($this->generateError(self::ERROR_GAME_NOT_FOUND));
-            $view->setStatusCode(404);
-
-            return $view;
+            return $this->raiseError($view, self::ERROR_GAME_NOT_FOUND);
         }
 
         // Exactly one character may be submitted
         if (!preg_match('/^[a-z]{1}$/i', $character)) {
-            $view->setData($this->generateError(self::ERROR_INVALID_CHARACTER));
-            $view->setStatusCode(400);
-
-            return $view;
+            return $this->raiseError($view, self::ERROR_INVALID_CHARACTER);
         }
 
         // Already done!
@@ -100,17 +110,11 @@ class GameProcessor
         }
 
         if ($game->getTriesLeft() == 0) {
-            $view->setData($this->generateError(self::ERROR_TRIES_DEPLETED));
-            $view->setStatusCode(403);
-
-            return $view;
+            return $this->raiseError($view, self::ERROR_TRIES_DEPLETED);
         }
 
         if (in_array($character, $game->getCharactersGuessed())) {
-            $view->setData($this->generateError(self::ERROR_CHARACTER_NOT_NEW));
-            $view->setStatusCode(403);
-
-            return $view;
+            return $this->raiseError($view, self::ERROR_CHARACTER_NOT_NEW);
         }
 
         $game->addCharacterGuessed($character);
