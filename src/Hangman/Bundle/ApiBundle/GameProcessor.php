@@ -18,6 +18,9 @@ class GameProcessor
     const ERROR_TRIES_DEPLETED = '300';
     const ERROR_CHARACTER_NOT_NEW = '300';
 
+    /**
+     * @var array Human-friendly error messages.
+     */
     private $errorMessages = array(
         self::ERROR_GAME_NOT_FOUND => 'Sorry, that game does not exist',
         self::ERROR_INVALID_CHARACTER => 'Sorry, that was an invalid character',
@@ -25,7 +28,10 @@ class GameProcessor
         self::ERROR_CHARACTER_NOT_NEW => 'Sorry, you already used that character',
     );
 
-    private $em = null;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
     /**
      * Constructor.
