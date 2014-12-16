@@ -145,7 +145,7 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests a game that has no more tries left.
+     * Tests supplying a character that was already tried before.
      */
     public function testGameRetryCharacter()
     {

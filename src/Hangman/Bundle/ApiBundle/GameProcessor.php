@@ -10,7 +10,6 @@ use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
  * Class Processor
  *
  * @package Hangman\Bundle\DatastoreBundle
- * @todo Move into ApiBundle?
  */
 class GameProcessor
 {
@@ -28,11 +27,23 @@ class GameProcessor
 
     private $em = null;
 
+    /**
+     * Constructor.
+     *
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
+    /**
+     * Generates a properly formatted error.
+     *
+     * @param int $code The error code for which to generate a formatted error.
+     *
+     * @return array The formatted error.
+     */
     protected function generateError($code)
     {
         return array(
