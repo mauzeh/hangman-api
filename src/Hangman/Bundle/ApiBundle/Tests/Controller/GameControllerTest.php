@@ -8,6 +8,13 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class GameControllerTest extends WebTestCase
 {
+    public function setUp()
+    {
+        $this->loadFixtures(array(
+            'Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\WordData',
+        ));
+    }
+
     public function testGameAction()
     {
         $client = static::createClient();

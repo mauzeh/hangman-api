@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityRepository;
 
 class WordRepository extends EntityRepository
 {
-
     /**
      * @return array
      */
@@ -22,10 +21,9 @@ class WordRepository extends EntityRepository
                 ORDER BY w.id ASC
                 LIMIT 1";
 
-        $stmt = $connection->query($sql);
-        $result = $stmt->fetch();
+        $result = $connection->query($sql)->fetch();
 
-        if(false === $result) {
+        if (false === $result) {
             throw new RuntimeException('No words available');
         }
 

@@ -27,19 +27,3 @@ Every response should contain the following fields:
 *tries_left*: the number of tries left to guess the word (starts at 11)
 
 *status*: current status of the game (busy|fail|success)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -14,6 +14,18 @@ use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
  */
 class GameProcessor
 {
+    const ERROR_GAME_NOT_FOUND = '100';
+    const ERROR_INVALID_CHARACTER = '200';
+    const ERROR_TRIES_DEPLETED = '300';
+    const ERROR_CHARACTER_NOT_NEW = '300';
+
+    private $errorMessages = array(
+        self::ERROR_GAME_NOT_FOUND => 'Sorry, that game does not exist',
+        self::ERROR_INVALID_CHARACTER => 'Sorry, that was an invalid character',
+        self::ERROR_TRIES_DEPLETED => 'Sorry, there are no more tries left on this game',
+        self::ERROR_CHARACTER_NOT_NEW => 'Sorry, you already used that character',
+    );
+
     private $em = null;
 
     public function __construct(EntityManagerInterface $em)
@@ -21,9 +33,25 @@ class GameProcessor
         $this->em = $em;
     }
 
+    protected function generateError($code)
+    {
+        return array(
+            'errors' => array(
+                array(
+                    'code' => $code,
+                    'message' => $this->errorMessages[$code]
+                ),
+            ),
+        );
+    }
+
     /**
-     * @param Game $game
-     * @param $character
+     * Processes a game entry submission.
+     *
+     * @param View   $view
+     * @param Game   $game
+     * @param string $character
+     *
      * @return View
      *
      * @todo break up into smaller pieces.
@@ -32,6 +60,7 @@ class GameProcessor
     {
         // A corresponding Game must have been found
         if ($game === null) {
+            $view->setData($this->generateError(self::ERROR_GAME_NOT_FOUND));
             $view->setStatusCode(404);
 
             return $view;
@@ -39,51 +68,30 @@ class GameProcessor
 
         // Exactly one character may be submitted
         if (!preg_match('/^[a-z]{1}$/i', $character)) {
+            $view->setData($this->generateError(self::ERROR_INVALID_CHARACTER));
             $view->setStatusCode(400);
 
             return $view;
         }
 
-        $triesLeft = $game->getTriesLeft();
-
         // Already done!
-        if ($game->getStatus() === Game::STATUS_SUCCESS) {
+        if ($game->getStatus() === Game::STATUS_SUCCESS || $game->getStatus() === Game::STATUS_FAIL) {
             $view->setStatusCode(200);
             $view->setData($game);
 
             return $view;
         }
 
-        // Already done!
-        if ($game->getStatus() === Game::STATUS_FAIL) {
-            $view->setStatusCode(200);
-            $view->setData($game);
-
-            return $view;
-        }
-
-        if ($triesLeft > 11) {
-            // @todo return something evil. Bad HTTP code and a message.
-            // This is something that really should not ever happen.
+        if ($game->getTriesLeft() == 0) {
+            $view->setData($this->generateError(self::ERROR_TRIES_DEPLETED));
             $view->setStatusCode(403);
-            $view->setData($game);
 
             return $view;
         }
 
-        if ($triesLeft == 0) {
-            // @todo return an error message? See how the Twitter API does it.
-            $view->setStatusCode(403);
-            $view->setData($game);
-
-            return $view;
-        }
-
-        // If the letter is already in use
         if (in_array($character, $game->getCharactersGuessed())) {
-            // @todo return something useful.
-            $view->setStatusCode(200);
-            $view->setData($game);
+            $view->setData($this->generateError(self::ERROR_CHARACTER_NOT_NEW));
+            $view->setStatusCode(403);
 
             return $view;
         }

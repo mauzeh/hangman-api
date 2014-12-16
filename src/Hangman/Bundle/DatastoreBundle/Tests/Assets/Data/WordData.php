@@ -24,16 +24,10 @@ class WordData implements FixtureInterface
                 'word' => 'hangman',
             ),
             array(
-                'word' => 'always',
+                'word' => 'is',
             ),
             array(
-                'word' => 'rocks',
-            ),
-            array(
-                'word' => 'this',
-            ),
-            array(
-                'word' => 'world',
+                'word' => 'awesome',
             ),
         );
     }

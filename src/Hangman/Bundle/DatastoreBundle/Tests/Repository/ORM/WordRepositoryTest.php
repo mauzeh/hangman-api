@@ -1,4 +1,5 @@
 <?php
+
 namespace Hangman\Bundle\DatastoreBundle\Tests\Repository\ORM;
 
 use PHPUnit_Framework_TestCase;
