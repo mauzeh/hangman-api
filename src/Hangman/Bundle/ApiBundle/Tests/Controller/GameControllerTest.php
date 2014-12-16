@@ -78,7 +78,6 @@ class GameControllerTest extends WebTestCase
     public function testErrorResponse()
     {
         $client = static::createClient();
-
         $client->request('PUT', '/games/non-existent', array(
             'character' => 'y',
         ));
