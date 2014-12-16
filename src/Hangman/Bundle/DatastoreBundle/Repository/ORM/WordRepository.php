@@ -1,9 +1,15 @@
 <?php
+
 namespace Hangman\Bundle\DatastoreBundle\Repository\ORM;
 
 use RuntimeException;
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Class WordRepository
+ *
+ * @package Hangman\Bundle\DatastoreBundle\Repository\ORM
+ */
 class WordRepository extends EntityRepository
 {
     /**
