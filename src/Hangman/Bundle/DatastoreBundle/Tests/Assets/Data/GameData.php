@@ -15,11 +15,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 class GameData implements FixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * @return array
      */
-    public function load(ObjectManager $manager)
+    public static function getData()
     {
-        $data = array(
+        return array(
             array(
                 'tries_left' => 11,
                 'word' => 'hangman',
@@ -45,8 +45,14 @@ class GameData implements FixtureInterface
                 'characters_guessed' => array('p', 'e', 'r', 'f', 'c', 't'),
             ),
         );
+    }
 
-        foreach ($data as $item) {
+    /**
+     * {@inheritDoc}
+     */
+    public function load(ObjectManager $manager)
+    {
+        foreach (static::getData() as $item) {
             $game = new Game();
             $game->setTriesLeft($item['tries_left']);
             $game->setWord($item['word']);

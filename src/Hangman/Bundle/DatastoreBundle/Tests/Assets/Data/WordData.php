@@ -15,11 +15,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 class WordData implements FixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * @return array
      */
-    public function load(ObjectManager $manager)
+    public static function getData()
     {
-        $data = array(
+        return array(
             array(
                 'word' => 'hangman',
             ),
@@ -36,7 +36,14 @@ class WordData implements FixtureInterface
                 'word' => 'world',
             ),
         );
-        foreach ($data as $item) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function load(ObjectManager $manager)
+    {
+        foreach (static::getData() as $item) {
             $word = new Word();
             $word->setWord($item['word']);
             $manager->persist($word);
