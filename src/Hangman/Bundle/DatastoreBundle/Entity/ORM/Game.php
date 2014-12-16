@@ -1,11 +1,13 @@
 <?php
+
 namespace Hangman\Bundle\DatastoreBundle\Entity\ORM;
 
 use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
+ * The Game entity class.
+ *
  * @ORM\Entity(repositoryClass="Hangman\Bundle\DatastoreBundle\Repository\ORM\GameRepository")
  * @ORM\Table(name="game")
  */
