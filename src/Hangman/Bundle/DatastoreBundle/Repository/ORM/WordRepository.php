@@ -23,7 +23,9 @@ class WordRepository extends EntityRepository
         $maxId = $connection->query('SELECT MAX(id) as max_id FROM word')->fetchColumn();
         $sql = "SELECT w.word FROM word AS w WHERE id = :id";
 
-        $result = $connection->prepare($sql)->execute(array('id' => rand(1, $maxId)))->fetch();
+        $query = $connection->query($sql);
+        $query->execute(array('id' => rand(1, $maxId)));
+        $result = $query->fetch();
 
         if (false === $result) {
             throw new RuntimeException('No words available');
