@@ -2,12 +2,21 @@
 
 namespace Hangman\Bundle\ApiBundle\Tests\Controller;
 
+use Hangman\Bundle\ApiBundle\GameProcessor;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 use Hangman\Bundle\DatastoreBundle\Tests\Assets\Data\WordData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * Class GameControllerTest
+ *
+ * @package Hangman\Bundle\ApiBundle\Tests\Controller
+ */
 class GameControllerTest extends WebTestCase
 {
+    /**
+     * Initialize the data fixture.
+     */
     public function setUp()
     {
         $this->loadFixtures(array(
@@ -15,6 +24,15 @@ class GameControllerTest extends WebTestCase
         ));
     }
 
+    /**
+     * Test the POST and PUT calls.
+     *
+     * Detailed tests for various game entry scenarios are performed in the unit
+     * test class GameProcessorTest.
+     *
+     * This test merely ascertains that the proper HTTP responses are returned
+     * and that the response contains the game information.
+     */
     public function testGameAction()
     {
         $client = static::createClient();
@@ -48,7 +66,16 @@ class GameControllerTest extends WebTestCase
         $this->assertObjectHasAttribute('status', $game);
     }
 
-    public function testNonExistentGame()
+    /**
+     * Test a single error response.
+     *
+     * All edge cases and error codes are tested the unit test class
+     * GameProcessorTest.
+     *
+     * This test merely ascertains that an error propagates properly in the
+     * HTTP response.
+     */
+    public function testErrorResponse()
     {
         $client = static::createClient();
 
@@ -57,5 +84,9 @@ class GameControllerTest extends WebTestCase
         ));
         $response = $client->getResponse();
         $this->assertEquals(404, $response->getStatusCode());
+        // @todo is the use of json_decode warranted here? is there some
+        $errors = json_decode($response->getContent());
+        $this->assertEquals(GameProcessor::ERROR_GAME_NOT_FOUND, $errors->errors[0]->code);
+        $this->assertCount(1, $errors->errors);
     }
 }
