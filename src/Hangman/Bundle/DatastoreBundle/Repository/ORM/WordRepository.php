@@ -20,12 +20,8 @@ class WordRepository extends EntityRepository
         $entityManager = $this->getEntityManager();
         $connection = $entityManager->getConnection();
 
-        $sql = "SELECT w.word
-                FROM word AS w
-                JOIN (SELECT CEIL(RAND() * (SELECT MAX(id) FROM word)) AS id) AS tmp
-                WHERE w.id >= tmp.id
-                ORDER BY w.id ASC
-                LIMIT 1";
+        $maxId = $connection->query('SELECT MAX(id) as max_id FROM word')->fetchColumn();
+        $sql = "SELECT w.word FROM word AS w WHERE id = " . rand(1, $maxId);
 
         $result = $connection->query($sql)->fetch();
 

@@ -2,6 +2,7 @@
 
 namespace Hangman\Bundle\ApiBundle\Tests\Controller;
 
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Hangman\Bundle\ApiBundle\GameProcessor;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 use Hangman\Bundle\DatastoreBundle\Tests\Assets\Data\WordData;
@@ -21,7 +22,7 @@ class GameControllerTest extends WebTestCase
     {
         $this->loadFixtures(array(
             'Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\WordData',
-        ));
+        ), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
     }
 
     /**

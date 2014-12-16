@@ -92,9 +92,9 @@ class WordRepositoryTest extends PHPUnit_Framework_TestCase
                     ->disableOriginalConstructor()
                     ->getMock();
 
-        $mock->expects($this->once())
-             ->method('query')
-             ->will($this->returnValue($this->getStatementMock()));
+        $mock->expects($this->atLeastOnce())
+            ->method('query')
+            ->will($this->returnValue($this->getStatementMock()));
 
         return $mock;
     }
@@ -121,4 +121,4 @@ class WordRepositoryTest extends PHPUnit_Framework_TestCase
 
         return $mock;
     }
-} 
+}
