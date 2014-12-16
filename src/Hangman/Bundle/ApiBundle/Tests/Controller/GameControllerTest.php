@@ -69,7 +69,7 @@ class GameControllerTest extends WebTestCase
     /**
      * Test a single error response.
      *
-     * All edge cases and error codes are tested the unit test class
+     * All edge cases and error codes are tested using the unit test class
      * GameProcessorTest.
      *
      * This test merely ascertains that an error propagates properly in the
