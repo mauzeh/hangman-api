@@ -1,9 +1,12 @@
 <?php
+
 namespace Hangman\Bundle\DatastoreBundle\Entity\ORM;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * The Word entity class.
+ *
  * @ORM\Entity(repositoryClass="Hangman\Bundle\DatastoreBundle\Repository\ORM\WordRepository")
  * @ORM\Table(name="word")
  */
