@@ -1,0 +1,4 @@
+services:
+    hangman_api.processor:
+        class: Hangman\Bundle\ApiBundle\GameProcessor
+        arguments: [@doctrine.orm.entity_manager]

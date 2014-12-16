@@ -23,12 +23,17 @@ class GameController extends Controller
      */
     public function postGamesAction()
     {
-        $word = $this->getDoctrine()->getManager()
+        $em = $this->getDoctrine()->getManager();
+
+        $word = $em
             ->getRepository('HangmanDatastoreBundle:ORM\Word')
             ->getRandomWord();
 
         $game = new Game();
         $game->setWord($word);
+
+        $em->persist($game);
+        $em->flush();
 
         return View::create($game);
     }
@@ -46,8 +51,10 @@ class GameController extends Controller
 
         $character = $request->request->get('character');
 
+        $view = View::create();
+
         return $this
-            ->get('hangman_datastore.processor')
-            ->process($game, $character);
+            ->get('hangman_api.processor')
+            ->process($view, $game, $character);
     }
 }

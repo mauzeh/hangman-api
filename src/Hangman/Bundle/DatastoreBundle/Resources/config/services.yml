@@ -2,6 +2,3 @@ services:
 #    hangman_datastore.example:
 #        class: Hangman\Bundle\DatastoreBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
-    hangman_datastore.processor:
-        class: Hangman\Bundle\DataStoreBundle\Processor
-        arguments: [@doctrine.orm.entity_manager]
