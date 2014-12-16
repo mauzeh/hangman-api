@@ -16,9 +16,16 @@ doctrine:
         default_connection: default
         connections:
             default:
-                dbname:   "hangman_test"
+                dbname: "me_hangman_test"
 
 web_profiler:
     toolbar: false
     intercept_redirects: false
 
+#doctrine:
+#    dbal:
+#        default_connection: default
+#        connections:
+#            default:
+#                driver:   pdo_sqlite
+#                path:     %kernel.cache_dir%/test.db

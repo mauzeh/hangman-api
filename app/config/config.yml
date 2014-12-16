@@ -55,3 +55,15 @@ doctrine_migrations:
     namespace: Hangman\Migrations
     table_name: migration_versions
     name: Hangman migrations
+
+fos_rest:
+    # configure the view handler
+    view:
+        view_response_listener: force
+        force_redirects:
+            html: true
+        formats:
+            json: true
+    format_listener:
+        rules:
+            - { path: ^/, priorities: [ json ], fallback_format: json, prefer_extension: false }

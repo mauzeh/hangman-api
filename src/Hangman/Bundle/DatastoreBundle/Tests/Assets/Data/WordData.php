@@ -1,34 +1,46 @@
 <?php
+
 namespace Hangman\Bundle\DatastoreBundle\Tests\Assets\Data;
 
-class WordData implements DataInterface
+use Hangman\Bundle\DatastoreBundle\Entity\ORM\Word;
+
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+
+/**
+ * Class WordData
+ *
+ * @package Hangman\Bundle\DatastoreBundle\Tests\Assets\Data
+ */
+class WordData implements FixtureInterface
 {
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    public function getData()
+    public function load(ObjectManager $manager)
     {
-        return array(
+        $data = array(
             array(
-                'id' => 1,
-                'word' => 'hangman'
+                'word' => 'hangman',
             ),
             array(
-                'id' => 2,
-                'word' => 'always'
+                'word' => 'always',
             ),
             array(
-                'id' => 3,
-                'word' => 'rocks'
+                'word' => 'rocks',
             ),
             array(
-                'id' => 4,
-                'word' => 'this'
+                'word' => 'this',
             ),
             array(
-                'id' => 5,
-                'word' => 'world'
-            )
+                'word' => 'world',
+            ),
         );
+        foreach ($data as $item) {
+            $word = new Word();
+            $word->setWord($item['word']);
+            $manager->persist($word);
+        }
+        $manager->flush();
     }
 } 

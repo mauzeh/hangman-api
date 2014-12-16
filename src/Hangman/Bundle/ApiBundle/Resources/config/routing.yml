@@ -2,3 +2,7 @@ hangman_api_hello_world:
     path:     /hello/world
     defaults: { _controller: HangmanApiBundle:HelloWorld:helloWorld }
     methods:  [GET]
+
+hangman_api_game:
+    type: rest
+    resource: Hangman\Bundle\ApiBundle\Controller\GameController
