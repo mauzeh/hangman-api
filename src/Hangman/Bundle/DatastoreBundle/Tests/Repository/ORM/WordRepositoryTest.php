@@ -5,9 +5,21 @@ namespace Hangman\Bundle\DatastoreBundle\Tests\Repository\ORM;
 use PHPUnit_Framework_TestCase;
 use Hangman\Bundle\DatastoreBundle\Repository\ORM\WordRepository;
 
+/**
+ * Class WordRepositoryTest
+ *
+ * @package Hangman\Bundle\DatastoreBundle\Tests\Repository\ORM
+ */
 class WordRepositoryTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var string
+     */
     protected $expectedWord = 'tested';
+
+    /**
+     * @var bool
+     */
     protected $noWordsInDatastore = false;
 
     /**
@@ -25,6 +37,9 @@ class WordRepositoryTest extends PHPUnit_Framework_TestCase
         $repository->getRandomWord();
     }
 
+    /**
+     * Tests that a random word is returned.
+     */
     public function testRandomWordReturned()
     {
         $repository = new WordRepository(
@@ -39,6 +54,9 @@ class WordRepositoryTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getClassMetadataMock()
     {
         return $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')
@@ -91,7 +109,7 @@ class WordRepositoryTest extends PHPUnit_Framework_TestCase
                      ->disableOriginalConstructor()
                      ->getMock();
 
-        if(false === $this->noWordsInDatastore) {
+        if (false === $this->noWordsInDatastore) {
             $mock->expects($this->once())
                  ->method('fetch')
                  ->will($this->returnValue(array('word' => $this->expectedWord)));
