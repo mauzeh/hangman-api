@@ -139,7 +139,6 @@ class GameProcessor
         $view->setStatusCode(200);
         $view->setData($game);
 
-        // @todo ensure this is called in a test
         $this->em->flush();
 
         return $view;
