@@ -14,9 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Game
 {
     const STATUS_BUSY = 'busy';
-
     const STATUS_FAIL = 'fail';
-
     const STATUS_SUCCESS = 'success';
 
     /**

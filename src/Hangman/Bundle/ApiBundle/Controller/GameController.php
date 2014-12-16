@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 class GameController extends Controller
 {
     /**
-     * @param Request $request
-     *
      * @return View
      */
     public function postGamesAction()
@@ -39,9 +37,10 @@ class GameController extends Controller
     }
 
     /**
-     * @param $id
+     * @param Request $request
+     * @param int     $id
      *
-     * @return View
+     * @return mixed
      */
     public function putGameAction(Request $request, $id)
     {
