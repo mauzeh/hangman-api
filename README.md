@@ -42,7 +42,7 @@ PHPUnit is included in `composer.json` so you may also invoke the tests by execu
 
 * The test data fixture no longer contains a GameData fixture. Games are created in-memory in the [`GameProcessorTest`](src/Hangman/Bundle/ApiBundle/Tests/GameProcessorTest.php) class.
 
-* The random word selector supplied in the original assignment contained a non-agnostic query function: `CEIL()`. To allow the app to remain database-agnostisch, the random word selector has been replaced with a database-agnostic version.
+* The random word selector supplied in the original assignment contained a non-agnostic query function: `CEIL()`. To allow the app to remain database-agnostic, the random word selector has been replaced with a database-agnostic version.
 
 The API contains the following resources:
 
