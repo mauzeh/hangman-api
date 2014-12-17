@@ -1,6 +1,20 @@
 # SIM Hangman API #
 
-This repository contains a minimal implementation of a hangman API using the following resources below:
+This repository contains a minimal implementation of a hangman API.
+
+## Notes to the reviewer ##
+ 
+* There is API documentation available via /api/doc.
+
+* This API assumes JSON data. A more elaborate API could include other data formats, which could be derived from the HTTP-Accept header or from the filename extension used in the URI.
+
+* A simplified authentication mechanism is implemented. More elaborate APIs could use an implementation of Symfony's [`SimplePreAuthenticatorInterface`](http://api.symfony.com/2.6/Symfony/Component/Security/Core/Authentication/SimplePreAuthenticatorInterface.html).
+
+* The test data fixture no longer contains a GameData fixture. Games are created in-memory in the [`GameProcessorTest`](src/Hangman/Bundle/ApiBundle/Tests/GameProcessorTest.php) class.
+
+* The random word selector supplied in the original assignment contained a non-agnostic query function: `CEIL()`. To allow the app to remain database-agnostisch, the random word selector has been replaced with a database-agnostic version.
+
+The API contains the following resources:
 
 ## Resources ##
 
