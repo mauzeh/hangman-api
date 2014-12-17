@@ -1,4 +1,4 @@
-# SIM Hangman API #
+# Hangman API #
 
 This repository contains a minimal implementation of a hangman API.
 
