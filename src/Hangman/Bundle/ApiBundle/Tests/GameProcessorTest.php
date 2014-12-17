@@ -2,7 +2,6 @@
 
 namespace Hangman\Bundle\ApiBundle\Tests;
 
-use FOS\RestBundle\View\View;
 use Hangman\Bundle\ApiBundle\GameProcessor;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 
@@ -18,7 +17,6 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGameSuccess()
     {
-        $view = View::create();
         $game = new Game();
         $game->setWord('fool');
         $game->setCharactersGuessed(array(
@@ -32,8 +30,7 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
             ->method('flush');
 
         $processor = new GameProcessor($em);
-        $response = $processor->process($view, $game, $character);
-        $this->assertEquals(200, $response->getStatusCode());
+        $game = $processor->process($game, $character);
         $this->assertEquals(Game::STATUS_SUCCESS, $game->getStatus());
         $this->assertEquals(6, $game->getTriesLeft());
     }
@@ -43,7 +40,6 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGameFail()
     {
-        $view = View::create();
         $game = new Game();
         $game->setWord('a');
         $game->setTriesLeft(1);
@@ -54,8 +50,7 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
             ->method('flush');
 
         $processor = new GameProcessor($em);
-        $response = $processor->process($view, $game, $character);
-        $this->assertEquals(200, $response->getStatusCode());
+        $game = $processor->process($game, $character);
         $this->assertEquals(Game::STATUS_FAIL, $game->getStatus());
         $this->assertEquals(0, $game->getTriesLeft());
     }
@@ -65,7 +60,6 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGameBusy()
     {
-        $view = View::create();
         $game = new Game();
         $game->setWord('something');
         $game->setTriesLeft(11);
@@ -76,18 +70,34 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
             ->method('flush');
 
         $processor = new GameProcessor($em);
-        $response = $processor->process($view, $game, $character);
-        $this->assertEquals(200, $response->getStatusCode());
+        $game = $processor->process($game, $character);
         $this->assertEquals(10, $game->getTriesLeft());
         $this->assertEquals(array('z'), $game->getCharactersGuessed());
     }
 
     /**
+     * Tests game not found.
+     *
+     * @expectedException \Hangman\Bundle\ApiBundle\Exception\GameNotFoundException
+     */
+    public function testGameNotFound()
+    {
+        $character = '-';
+
+        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        $em->expects($this->never())
+            ->method('flush');
+
+        $processor = new GameProcessor($em);
+        $processor->process(null, $character);
+    }
+
+    /**
      * Tests supplying an invalid character.
+     * @expectedException \Hangman\Bundle\ApiBundle\Exception\InvalidCharacterException
      */
     public function testInvalidCharacter()
     {
-        $view = View::create();
         $game = new Game();
         $character = '-';
 
@@ -96,37 +106,16 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
             ->method('flush');
 
         $processor = new GameProcessor($em);
-        $response = $processor->process($view, $game, $character);
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertEquals(GameProcessor::ERROR_INVALID_CHARACTER, $response->getData()['errors'][0]['code']);
-        $this->assertCount(1, $response->getData()['errors']);
-    }
-
-    /**
-     * Tests supplying an invalid character.
-     */
-    public function testGameNotFound()
-    {
-        $view = View::create();
-        $character = '-';
-
-        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
-        $em->expects($this->never())
-            ->method('flush');
-
-        $processor = new GameProcessor($em);
-        $response = $processor->process($view, null, $character);
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals(GameProcessor::ERROR_GAME_NOT_FOUND, $response->getData()['errors'][0]['code']);
-        $this->assertCount(1, $response->getData()['errors']);
+        $processor->process($game, $character);
     }
 
     /**
      * Tests a game that has no more tries left.
+     *
+     * @expectedException \Hangman\Bundle\ApiBundle\Exception\TriesDepletedException
      */
     public function testGameNoMoreTries()
     {
-        $view = View::create();
         $game = new Game();
         $game->setWord('something');
         $game->setTriesLeft(0);
@@ -137,19 +126,16 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
             ->method('flush');
 
         $processor = new GameProcessor($em);
-        $response = $processor->process($view, $game, $character);
-        $this->assertEquals(403, $response->getStatusCode());
-        $this->assertEquals(GameProcessor::ERROR_TRIES_DEPLETED, $response->getData()['errors'][0]['code']);
-        $this->assertCount(1, $response->getData()['errors']);
-        $this->assertEquals(0, $game->getTriesLeft());
+        $processor->process($game, $character);
     }
 
     /**
      * Tests supplying a character that was already tried before.
+     *
+     * @expectedException \Hangman\Bundle\ApiBundle\Exception\CharacterNotNewException
      */
     public function testGameRetryCharacter()
     {
-        $view = View::create();
         $game = new Game();
         $game->setWord('something');
         $game->setCharactersGuessed(array('a'));
@@ -160,10 +146,6 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
             ->method('flush');
 
         $processor = new GameProcessor($em);
-        $response = $processor->process($view, $game, $character);
-        $this->assertEquals(403, $response->getStatusCode());
-        $this->assertEquals(GameProcessor::ERROR_CHARACTER_NOT_NEW, $response->getData()['errors'][0]['code']);
-        $this->assertCount(1, $response->getData()['errors']);
-        $this->assertEquals(11, $game->getTriesLeft());
+        $processor->process($game, $character);
     }
 }

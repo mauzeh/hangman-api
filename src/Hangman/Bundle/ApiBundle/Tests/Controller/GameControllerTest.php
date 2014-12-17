@@ -90,9 +90,7 @@ class GameControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(404, $response->getStatusCode());
         // @todo is the use of json_decode warranted here?
-        $errors = json_decode($response->getContent());
-        $this->assertEquals(GameProcessor::ERROR_GAME_NOT_FOUND, $errors->errors[0]->code);
-        $this->assertCount(1, $errors->errors);
+        $content = json_decode($response->getContent());
     }
 
     /**

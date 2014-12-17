@@ -5,9 +5,11 @@ namespace Hangman\Bundle\ApiBundle\Controller;
 // @todo remove unused use statements throughout app
 
 use FOS\RestBundle\View\View;
+use Hangman\Bundle\ApiBundle\Exception\InvalidTokenException;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class GameController
@@ -34,7 +36,11 @@ class GameController extends Controller
             ->getRepository('HangmanDatastoreBundle:ORM\Consumer')
             ->findByToken($token);
 
-        return !empty($consumer);
+        if (empty($consumer)) {
+            throw new InvalidTokenException(
+                403, 'Invalid authentication token.'
+            );
+        }
     }
 
     /**
@@ -46,11 +52,7 @@ class GameController extends Controller
     {
         $view = View::create();
 
-        if (!$this->authenticate($request)) {
-            $view->setStatusCode(403);
-
-            return $view;
-        }
+        $this->authenticate($request);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -75,13 +77,7 @@ class GameController extends Controller
      */
     public function putGameAction(Request $request, $id)
     {
-        $view = View::create();
-
-        if (!$this->authenticate($request)) {
-            $view->setStatusCode(403);
-
-            return $view;
-        }
+        $this->authenticate($request);
 
         $game = $this->getDoctrine()->getManager()
             ->getRepository('HangmanDatastoreBundle:ORM\Game')
@@ -89,8 +85,10 @@ class GameController extends Controller
 
         $character = $request->request->get('character');
 
-        return $this
+        $game = $this
             ->get('hangman_api.processor')
-            ->process($view, $game, $character);
+            ->process($game, $character);
+
+        return View::create($game, 200);
     }
 }
