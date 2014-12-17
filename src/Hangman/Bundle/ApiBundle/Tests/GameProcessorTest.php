@@ -56,15 +56,15 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests a busy game.
+     * Tests a correct guess.
      */
-    public function testGameBusy()
+    public function testCorrectGuess()
     {
         $game = new Game();
         $game->setWord('something');
-        $game->setTriesLeft(11);
-        $game->setCharactersGuessed(array('s', 'o', 'm'));
-        $character = 'z';
+        $game->setTriesLeft(10);
+        $game->setCharactersGuessed(array('s', 'o', 'm', 'z'));
+        $character = 'e';
 
         $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
         $em->expects($this->once())
@@ -73,7 +73,30 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
         $processor = new GameProcessor($em);
         $game = $processor->process($game, $character);
         $this->assertEquals(10, $game->getTriesLeft());
-        $this->assertEquals(array('s', 'o', 'm', 'z'), $game->getCharactersGuessed());
+        $this->assertEquals(array('s', 'o', 'm', 'z', 'e'), $game->getCharactersGuessed());
+        $this->assertEquals('some.....', $game->getWord());
+    }
+
+    /**
+     * Tests an incorrect guess.
+     */
+    public function testInCorrectGuess()
+    {
+        $game = new Game();
+        $game->setWord('dinosaur');
+        $game->setTriesLeft(11);
+        $game->setCharactersGuessed(array('d', 'i', 's'));
+        $character = 'e';
+
+        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        $em->expects($this->once())
+            ->method('flush');
+
+        $processor = new GameProcessor($em);
+        $game = $processor->process($game, $character);
+        $this->assertEquals(10, $game->getTriesLeft());
+        $this->assertEquals(array('d', 'i', 's', 'e'), $game->getCharactersGuessed());
+        $this->assertEquals('di..s...', $game->getWord());
     }
 
     /**

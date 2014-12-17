@@ -90,6 +90,14 @@ class GameProcessor
 
         $game->addCharacterGuessed($character);
 
+        // If all characters have been guessed correctly
+        $pattern = '/['.implode($game->getCharactersGuessed()).']+/';
+        $remaining = preg_replace($pattern, '', $game->getWord());
+
+        if (strlen($remaining) === 0) {
+            $game->setStatus(Game::STATUS_SUCCESS);
+        }
+
         // If the character does not exist in the word
         if (false === strstr($game->getWord(), $character)) {
 
@@ -99,19 +107,14 @@ class GameProcessor
                 $game->setStatus(Game::STATUS_FAIL);
             }
 
-        // If this character was guessed correctly
-        } else {
-
-            // If all characters have been guessed correctly
-            $pattern = '/['.implode($game->getCharactersGuessed()).']+/';
-            $remaining = preg_replace($pattern, '', $game->getWord());
-
-            if (strlen($remaining) === 0) {
-                $game->setStatus(Game::STATUS_SUCCESS);
-            }
         }
 
         $this->em->flush();
+
+        // Replace the word with a censored version that has dots for letters
+        // that are not (yet) guessed.
+        $patternReverse = '/[^'.implode($game->getCharactersGuessed()).']/';
+        $game->setWord(preg_replace($patternReverse, '.', $game->getWord()));
 
         return $game;
     }
