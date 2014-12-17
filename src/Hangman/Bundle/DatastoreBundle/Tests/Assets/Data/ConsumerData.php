@@ -10,8 +10,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Class ConsumerData
  *
- * @todo move this into ApiBundle?
- *
  * @package Hangman\Bundle\DatastoreBundle\Tests\Assets\Data
  */
 class ConsumerData implements FixtureInterface
