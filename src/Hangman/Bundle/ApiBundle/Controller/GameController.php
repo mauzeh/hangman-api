@@ -2,8 +2,6 @@
 
 namespace Hangman\Bundle\ApiBundle\Controller;
 
-// @todo optimize imports throughout app
-
 use FOS\RestBundle\View\View;
 use Hangman\Bundle\ApiBundle\Exception\InvalidTokenException;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
