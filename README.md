@@ -19,7 +19,7 @@ cd hangman-api/
 You need [Composer](https://getcomposer.org/doc/00-intro.md) to initialize the app's dependencies:
 
 ```bash
-composer update
+composer update --prefer-dist
 ```
 
 You may run the tests by executing:
