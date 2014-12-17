@@ -79,17 +79,14 @@ class GameProcessor
     }
 
     /**
-     * Processes a game entry submission.
+     * Validates that the right preconditions have been met to process the Game.
      *
-     * @param View   $view
-     * @param Game   $game
-     * @param string $character
-     *
-     * @return View
-     *
-     * @todo break up into smaller pieces.
+     * @param View $view
+     * @param Game $game
+     * @param null $character
+     * @return array|bool|View
      */
-    public function process(View $view, Game $game = null, $character = null)
+    protected function validate(View $view, Game $game = null, $character = null)
     {
         // A corresponding Game must have been found
         if ($game === null) {
@@ -115,6 +112,25 @@ class GameProcessor
 
         if (in_array($character, $game->getCharactersGuessed())) {
             return $this->raiseError($view, self::ERROR_CHARACTER_NOT_NEW);
+        }
+
+        return true;
+    }
+
+    /**
+     * Processes a game entry submission.
+     *
+     * @param View   $view
+     * @param Game   $game
+     * @param string $character
+     *
+     * @return View
+     */
+    public function process(View $view, Game $game = null, $character = null)
+    {
+        $result = $this->validate($view, $game, $character);
+        if (true !== $result) {
+            return $result;
         }
 
         $game->addCharacterGuessed($character);
