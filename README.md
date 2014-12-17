@@ -30,7 +30,7 @@ phpunit -c app/
 
 Note: **you do NOT need to initialize a database**, as the tests will run using a Sqlite database which is created on-the-fly.
 
-PHPUnit is included in `composer.json` so you may also invoke the tests by executing it from the vendor folder.
+PHPUnit is included in `composer.json` so you may also invoke the tests by executing it from the vendor folder by running `vendor/phpunit/phpunit/phpunit -c app/`.
 
 ## Notes to the reviewer ##
  
