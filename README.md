@@ -22,7 +22,7 @@ You need [Composer](https://getcomposer.org/doc/00-intro.md) to initialize the a
 composer update --prefer-dist
 ```
 
-You may run the tests by executing:
+You need [PHPUnit](https://phpunit.de/manual/current/en/installation.html) to run the tests by executing:
 
 ```bash
 phpunit -c app/
