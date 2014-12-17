@@ -97,7 +97,7 @@ class GameControllerTest extends WebTestCase
     }
 
     /**
-     * Tests that an invalid token results in a 403 Forbidden response.
+     * Test that an invalid token results in a 403 Forbidden response.
      */
     public function testInvalidTokenResponse()
     {
