@@ -58,7 +58,8 @@ class GameProcessor
     /**
      * Generates a properly formatted error.
      *
-     * @param int $code The error code for which to generate a formatted error.
+     * @param View $view The view.
+     * @param int  $code The error code for which to generate a formatted error.
      *
      * @return array The formatted error.
      */
