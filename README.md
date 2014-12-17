@@ -22,10 +22,10 @@ You need [Composer](https://getcomposer.org/doc/00-intro.md) to initialize the a
 composer update --prefer-dist
 ```
 
-Run the tests by executing:
+You need [PHPUnit](https://phpunit.de/manual/current/en/installation.html) to run the tests by executing:
 
 ```bash
-vendor/phpunit/phpunit/phpunit -c app
+phpunit -c app/
 ```
 
 Note: **you do NOT need to initialize a database**, as the tests will run using a Sqlite database which is created on-the-fly.
