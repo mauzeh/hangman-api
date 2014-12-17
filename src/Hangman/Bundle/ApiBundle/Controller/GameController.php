@@ -59,8 +59,6 @@ class GameController extends Controller
      */
     public function postGamesAction(Request $request)
     {
-        $view = View::create();
-
         $this->authenticate($request);
 
         $em = $this->getDoctrine()->getManager();
@@ -75,7 +73,7 @@ class GameController extends Controller
         $em->persist($game);
         $em->flush();
 
-        return $view->setData($game);
+        return View::create($game, 200);
     }
 
     /**
