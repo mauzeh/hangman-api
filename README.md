@@ -2,9 +2,37 @@
 
 This repository contains a minimal implementation of a hangman API.
 
+## Installation and testing ##
+
+Install this Symfony app by first cloning this repository:
+
+```bash
+git clone https://github.com/mauzeh/hangman-api.git
+```
+
+Then, cd into the repository:
+
+```bash
+cd hangman-api/
+```
+
+You need [Composer](https://getcomposer.org/doc/00-intro.md) to initialize the app's dependencies:
+
+```bash
+composer update
+```
+
+Then, you may run the tests by executing:
+
+```bash
+phpunit -c app/
+```
+
+Note: **you do NOT need to initialize a database**, as the tests will run using a Sqlite database which is created on-the-fly.
+
 ## Notes to the reviewer ##
  
-* There is API documentation available via /api/doc.
+* The API documentation is available via /api/doc.
 
 * This API assumes JSON data. A more elaborate API could include other data formats, which could be derived from the HTTP-Accept header or from the filename extension used in the URI.
 
