@@ -102,4 +102,18 @@ class GameControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(403, $response->getStatusCode());
     }
+
+    /**
+     * Test an invalid URL.
+     */
+    public function testInvalidUrlResponse()
+    {
+        $client = static::createClient(array(), array(
+            'HTTP_X-Hangman-Token' => 'invalid'
+        ));
+
+        $client->request('POST', '/invalid-url');
+        $response = $client->getResponse();
+        $this->assertEquals(404, $response->getStatusCode());
+    }
 }
