@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/mauzeh/showcase-symfony.svg?branch=master)](https://travis-ci.org/mauzeh/showcase-symfony)
+[![Build Status](https://api.travis-ci.org/mauzeh/hangman-api.svg?branch=master)](https://travis-ci.org/mauzeh/hangman-api)
 
 # Hangman API #
 
