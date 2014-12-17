@@ -52,9 +52,9 @@ The API contains the following resources:
 
 A list of words can be found in the MySQL database. At the start of the game a random word should be picked from this list.
 
-**`PUT /games/[:id]`**
-
 ### Guess a started game ###
+
+**`PUT /games/[:id]`**
 
 - Guessing a correct letter does not decrement the number of tries left.
 - Only valid characters are a-z.
