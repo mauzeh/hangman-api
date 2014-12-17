@@ -106,10 +106,12 @@ class GameProcessor
             return $view;
         }
 
+        // No more tries left.
         if ($game->getTriesLeft() == 0) {
             return $this->raiseError($view, self::ERROR_TRIES_DEPLETED);
         }
 
+        // Character has already been submitted before.
         if (in_array($character, $game->getCharactersGuessed())) {
             return $this->raiseError($view, self::ERROR_CHARACTER_NOT_NEW);
         }
