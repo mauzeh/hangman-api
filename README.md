@@ -1,6 +1,6 @@
 # SIM Hangman API #
 
-In this assignment we ask you to implement a minimal version of a hangman API using the following resources below:
+This repository contains a minimal implementation of a hangman API using the following resources below:
 
 ## Resources ##
 
