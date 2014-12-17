@@ -84,6 +84,7 @@ class GameProcessor
      * @param View $view
      * @param Game $game
      * @param null $character
+     *
      * @return array|bool|View
      */
     protected function validate(View $view, Game $game = null, $character = null)
