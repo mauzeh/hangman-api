@@ -46,15 +46,11 @@ The API contains the following resources:
 
 ## Resources ##
 
-### Start a new game ###
-
-**`POST /games`**
+**`POST /games`: Start a new game**
 
 A list of words can be found in the MySQL database. At the start of the game a random word should be picked from this list.
 
-### Guess a started game ###
-
-**`PUT /games/[:id]`**
+**`PUT /games/[:id]`: Guess a started game**
 
 - Guessing a correct letter does not decrement the number of tries left.
 - Only valid characters are a-z.
