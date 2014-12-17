@@ -13,10 +13,10 @@ use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
  */
 class GameProcessor
 {
-    const ERROR_GAME_NOT_FOUND = '100';
-    const ERROR_INVALID_CHARACTER = '200';
-    const ERROR_TRIES_DEPLETED = '300';
-    const ERROR_CHARACTER_NOT_NEW = '300';
+    const ERROR_GAME_NOT_FOUND = 'errorGameNotFound';
+    const ERROR_INVALID_CHARACTER = 'errorInvalidCharacter';
+    const ERROR_TRIES_DEPLETED = 'errorTriesDepleted';
+    const ERROR_CHARACTER_NOT_NEW = 'errorCharacterNotNew';
 
     /**
      * @var array
