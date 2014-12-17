@@ -22,6 +22,7 @@ class GameControllerTest extends WebTestCase
     {
         $this->loadFixtures(array(
             'Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\WordData',
+            'Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\ConsumerData',
         ), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
     }
 
@@ -36,7 +37,9 @@ class GameControllerTest extends WebTestCase
      */
     public function testGameAction()
     {
-        $client = static::createClient();
+        $client = static::createClient(array(), array(
+            'HTTP_X-Hangman-Token' => 'my-token'
+        ));
 
         $client->request('POST', '/games');
         $response = $client->getResponse();
@@ -78,7 +81,10 @@ class GameControllerTest extends WebTestCase
      */
     public function testErrorResponse()
     {
-        $client = static::createClient();
+        $client = static::createClient(array(), array(
+            'HTTP_X-Hangman-Token' => 'my-token'
+        ));
+
         $client->request('PUT', '/games/non-existent', array(
             'character' => 'y',
         ));
@@ -88,5 +94,19 @@ class GameControllerTest extends WebTestCase
         $errors = json_decode($response->getContent());
         $this->assertEquals(GameProcessor::ERROR_GAME_NOT_FOUND, $errors->errors[0]->code);
         $this->assertCount(1, $errors->errors);
+    }
+
+    /**
+     * Tests that an invalid token results in a 403 Forbidden response.
+     */
+    public function testInvalidTokenResponse()
+    {
+        $client = static::createClient(array(), array(
+            'HTTP_X-Hangman-Token' => 'invalid'
+        ));
+
+        $client->request('POST', '/games');
+        $response = $client->getResponse();
+        $this->assertEquals(403, $response->getStatusCode());
     }
 }

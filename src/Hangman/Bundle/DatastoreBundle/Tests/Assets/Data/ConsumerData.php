@@ -2,19 +2,19 @@
 
 namespace Hangman\Bundle\DatastoreBundle\Tests\Assets\Data;
 
-use Hangman\Bundle\DatastoreBundle\Entity\ORM\Word;
+use Hangman\Bundle\DatastoreBundle\Entity\ORM\Consumer;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Class WordData
+ * Class ConsumerData
  *
  * @todo move this into ApiBundle?
  *
  * @package Hangman\Bundle\DatastoreBundle\Tests\Assets\Data
  */
-class WordData implements FixtureInterface
+class ConsumerData implements FixtureInterface
 {
     /**
      * @return array
@@ -23,13 +23,7 @@ class WordData implements FixtureInterface
     {
         return array(
             array(
-                'word' => 'hangman',
-            ),
-            array(
-                'word' => 'is',
-            ),
-            array(
-                'word' => 'awesome',
+                'token' => 'my-token',
             ),
         );
     }
@@ -40,9 +34,9 @@ class WordData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach (static::getData() as $item) {
-            $word = new Word();
-            $word->setWord($item['word']);
-            $manager->persist($word);
+            $consumer = new Consumer();
+            $consumer->setToken($item['token']);
+            $manager->persist($consumer);
         }
         $manager->flush();
     }
