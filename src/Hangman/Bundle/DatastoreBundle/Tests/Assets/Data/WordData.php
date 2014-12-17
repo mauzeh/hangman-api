@@ -2,10 +2,9 @@
 
 namespace Hangman\Bundle\DatastoreBundle\Tests\Assets\Data;
 
-use Hangman\Bundle\DatastoreBundle\Entity\ORM\Word;
-
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Hangman\Bundle\DatastoreBundle\Entity\ORM\Word;
 
 /**
  * Class WordData

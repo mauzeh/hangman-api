@@ -2,8 +2,8 @@
 
 namespace Hangman\Bundle\DatastoreBundle\Entity\ORM;
 
-use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * The Game entity class.

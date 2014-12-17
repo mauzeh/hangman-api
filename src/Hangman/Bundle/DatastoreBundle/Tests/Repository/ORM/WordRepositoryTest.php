@@ -2,8 +2,8 @@
 
 namespace Hangman\Bundle\DatastoreBundle\Tests\Repository\ORM;
 
-use PHPUnit_Framework_TestCase;
 use Hangman\Bundle\DatastoreBundle\Repository\ORM\WordRepository;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Class WordRepositoryTest

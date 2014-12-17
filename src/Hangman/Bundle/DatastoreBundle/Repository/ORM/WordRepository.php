@@ -2,8 +2,8 @@
 
 namespace Hangman\Bundle\DatastoreBundle\Repository\ORM;
 
-use RuntimeException;
 use Doctrine\ORM\EntityRepository;
+use RuntimeException;
 
 /**
  * Class WordRepository

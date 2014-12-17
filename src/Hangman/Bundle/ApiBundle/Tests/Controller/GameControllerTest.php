@@ -3,7 +3,6 @@
 namespace Hangman\Bundle\ApiBundle\Tests\Controller;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Hangman\Bundle\ApiBundle\GameProcessor;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 use Hangman\Bundle\DatastoreBundle\Tests\Assets\Data\WordData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;

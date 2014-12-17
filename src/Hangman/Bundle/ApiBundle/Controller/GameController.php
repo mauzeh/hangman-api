@@ -2,14 +2,13 @@
 
 namespace Hangman\Bundle\ApiBundle\Controller;
 
-// @todo remove unused use statements throughout app
+// @todo optimize imports throughout app
 
 use FOS\RestBundle\View\View;
 use Hangman\Bundle\ApiBundle\Exception\InvalidTokenException;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class GameController
