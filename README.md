@@ -22,7 +22,7 @@ You need [Composer](https://getcomposer.org/doc/00-intro.md) to initialize the a
 composer update
 ```
 
-Then, you may run the tests by executing:
+You may run the tests by executing:
 
 ```bash
 phpunit -c app/
@@ -32,7 +32,7 @@ Note: **you do NOT need to initialize a database**, as the tests will run using 
 
 ## Notes to the reviewer ##
  
-* The API documentation is available via /api/doc.
+* The API documentation is available via `/api/doc`.
 
 * This API assumes JSON data. A more elaborate API could include other data formats, which could be derived from the HTTP-Accept header or from the filename extension used in the URI.
 
