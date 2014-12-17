@@ -38,7 +38,7 @@ class GameControllerTest extends WebTestCase
     public function testGameAction()
     {
         $client = static::createClient(array(), array(
-            'HTTP_X-Hangman-Token' => 'my-token'
+            'HTTP_X-Hangmann-Token' => 'my-token'
         ));
 
         $client->request('POST', '/games');
