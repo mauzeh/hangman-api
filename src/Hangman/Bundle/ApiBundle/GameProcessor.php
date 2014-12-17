@@ -106,7 +106,6 @@ class GameProcessor
             if ($game->getTriesLeft() == 0) {
                 $game->setStatus(Game::STATUS_FAIL);
             }
-
         }
 
         $this->em->flush();
