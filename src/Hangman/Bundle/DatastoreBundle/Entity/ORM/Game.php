@@ -26,8 +26,6 @@ class Game
 
     /**
      * @ORM\Column(name="tries_left", type="integer")
-     *
-     * @todo Convert to CamelCase format to adhere to Sf2 coding standard
      */
     protected $tries_left = 11;
 

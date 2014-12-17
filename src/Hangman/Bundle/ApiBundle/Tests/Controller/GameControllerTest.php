@@ -44,7 +44,6 @@ class GameControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
 
-        // @todo is json_decode warranted here? should this be format-agnostic?
         $game = json_decode($response->getContent());
         $this->assertEquals(11, $game->tries_left);
         $this->assertEquals(Game::STATUS_BUSY, $game->status);
