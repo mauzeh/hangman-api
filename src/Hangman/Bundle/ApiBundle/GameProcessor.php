@@ -7,7 +7,7 @@ use FOS\RestBundle\View\View;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 
 /**
- * Class Processor
+ * Class GameProcessor
  *
  * @package Hangman\Bundle\DatastoreBundle
  */
@@ -19,7 +19,7 @@ class GameProcessor
     const ERROR_CHARACTER_NOT_NEW = '300';
 
     /**
-     * @var array Human-friendly error messages.
+     * @var array
      */
     private $errors = array(
         self::ERROR_GAME_NOT_FOUND => array(

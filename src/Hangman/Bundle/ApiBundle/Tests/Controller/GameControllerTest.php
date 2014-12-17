@@ -38,15 +38,14 @@ class GameControllerTest extends WebTestCase
     public function testGameAction()
     {
         $client = static::createClient(array(), array(
-            'HTTP_X-Hangmann-Token' => 'my-token'
+            'HTTP_X-Hangman-Token' => 'my-token'
         ));
 
         $client->request('POST', '/games');
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
 
-        // @todo is the use of json_decode warranted here? is there some
-        // format-agnostic way of retrieving the original object being received?
+        // @todo is json_decode warranted here? should this be format-agnostic?
         $game = json_decode($response->getContent());
         $this->assertEquals(11, $game->tries_left);
         $this->assertEquals(Game::STATUS_BUSY, $game->status);
@@ -90,7 +89,7 @@ class GameControllerTest extends WebTestCase
         ));
         $response = $client->getResponse();
         $this->assertEquals(404, $response->getStatusCode());
-        // @todo is the use of json_decode warranted here? is there some
+        // @todo is the use of json_decode warranted here?
         $errors = json_decode($response->getContent());
         $this->assertEquals(GameProcessor::ERROR_GAME_NOT_FOUND, $errors->errors[0]->code);
         $this->assertCount(1, $errors->errors);
