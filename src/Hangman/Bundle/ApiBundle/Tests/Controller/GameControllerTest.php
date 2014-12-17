@@ -20,8 +20,8 @@ class GameControllerTest extends WebTestCase
     public function setUp()
     {
         $this->loadFixtures(array(
-            '\Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\WordData',
-            '\Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\ConsumerData',
+            'Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\wordData',
+            'Hangman\Bundle\DataStoreBundle\Tests\Assets\Data\ConsumerData',
         ), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
     }
 
