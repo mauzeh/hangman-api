@@ -61,7 +61,7 @@ class GameControllerTest extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
 
-        // Assert that we get a valid JSON object back
+        // Assert that we get a valid object back
         $this->assertObjectHasAttribute('id', $game);
         $this->assertObjectHasAttribute('word', $game);
         $this->assertObjectHasAttribute('tries_left', $game);
@@ -89,8 +89,6 @@ class GameControllerTest extends WebTestCase
         ));
         $response = $client->getResponse();
         $this->assertEquals(404, $response->getStatusCode());
-        // @todo is the use of json_decode warranted here?
-        $content = json_decode($response->getContent());
     }
 
     /**
