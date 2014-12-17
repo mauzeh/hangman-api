@@ -40,7 +40,7 @@ class GameControllerTest extends WebTestCase
             'HTTP_X-Hangman-Token' => 'my-token'
         ));
 
-        $client->request('POST', '/games');
+        $client->request('POST', '/api/games');
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
 
@@ -52,7 +52,7 @@ class GameControllerTest extends WebTestCase
         // Also assert that one of the random words was picked
         $this->assertContains(array('word' => $game->word), WordData::getData());
 
-        $client->request('PUT', '/games/'.$game->id, array(
+        $client->request('PUT', '/api/games/'.$game->id, array(
             'character' => 'r',
         ));
         $response = $client->getResponse();
@@ -82,7 +82,7 @@ class GameControllerTest extends WebTestCase
             'HTTP_X-Hangman-Token' => 'my-token'
         ));
 
-        $client->request('PUT', '/games/non-existent', array(
+        $client->request('PUT', '/api/games/non-existent', array(
             'character' => 'y',
         ));
         $response = $client->getResponse();
@@ -98,7 +98,7 @@ class GameControllerTest extends WebTestCase
             'HTTP_X-Hangman-Token' => 'invalid'
         ));
 
-        $client->request('POST', '/games');
+        $client->request('POST', '/api/games');
         $response = $client->getResponse();
         $this->assertEquals(403, $response->getStatusCode());
     }
@@ -112,7 +112,7 @@ class GameControllerTest extends WebTestCase
             'HTTP_X-Hangman-Token' => 'invalid'
         ));
 
-        $client->request('POST', '/invalid-url');
+        $client->request('POST', '/api/invalid-url');
         $response = $client->getResponse();
         $this->assertEquals(404, $response->getStatusCode());
     }

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Hangman\Bundle\DatastoreBundle\HangmanDatastoreBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

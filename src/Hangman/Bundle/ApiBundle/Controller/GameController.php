@@ -7,6 +7,7 @@ use Hangman\Bundle\ApiBundle\Exception\InvalidTokenException;
 use Hangman\Bundle\DatastoreBundle\Entity\ORM\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Class GameController
@@ -41,6 +42,17 @@ class GameController extends Controller
     }
 
     /**
+     * Create a new game.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Create a new game.",
+     *  statusCodes={
+     *      200="Returned when successful.",
+     *      403="Returned when an invalid authentication token is supplied"
+     *  }
+     * )
+     *
      * @param Request $request
      *
      * @return View
@@ -67,10 +79,30 @@ class GameController extends Controller
     }
 
     /**
+     * Perform a guess in an existing game.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Perform a guess in an existing game.",
+     *  parameters={
+     *      {"name"="id", "dataType"="integer", "required"=true, "description"="game id"}
+     *  },
+     *  statusCodes={
+     *      200="Returned when successful.",
+     *      403={
+     *          "Returned when an invalid authentication token is supplied",
+     *          "Returned when an invalid character was submitted.",
+     *          "Returned when there are no more tries left.",
+     *          "Returned when the submitted character has already been submitted before.",
+     *      },
+     *      404="Returned when the game was not found"
+     *  }
+     * )
+     *
      * @param Request $request
      * @param int     $id
      *
-     * @return mixed
+     * @return View
      */
     public function putGameAction(Request $request, $id)
     {

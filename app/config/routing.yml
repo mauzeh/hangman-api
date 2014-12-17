@@ -1,4 +1,7 @@
 hangman_api:
     resource: "@HangmanApiBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /api
+hangman_api_doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
 

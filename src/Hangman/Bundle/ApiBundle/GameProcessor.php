@@ -51,7 +51,7 @@ class GameProcessor
         // Exactly one character may be submitted
         if (!preg_match('/^[a-z]{1}$/i', $character)) {
             throw new InvalidCharacterException(
-                400, 'Sorry, that was an invalid character'
+                403, 'Sorry, that was an invalid character'
             );
         }
 
