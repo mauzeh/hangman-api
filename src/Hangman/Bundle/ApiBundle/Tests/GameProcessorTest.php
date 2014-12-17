@@ -63,6 +63,7 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
         $game = new Game();
         $game->setWord('something');
         $game->setTriesLeft(11);
+        $game->setCharactersGuessed(array('s', 'o', 'm'));
         $character = 'z';
 
         $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
@@ -72,7 +73,7 @@ class GameProcessorTest extends \PHPUnit_Framework_TestCase
         $processor = new GameProcessor($em);
         $game = $processor->process($game, $character);
         $this->assertEquals(10, $game->getTriesLeft());
-        $this->assertEquals(array('z'), $game->getCharactersGuessed());
+        $this->assertEquals(array('s', 'o', 'm', 'z'), $game->getCharactersGuessed());
     }
 
     /**
