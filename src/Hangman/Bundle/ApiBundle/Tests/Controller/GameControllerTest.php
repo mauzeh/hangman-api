@@ -37,7 +37,7 @@ class GameControllerTest extends WebTestCase
     public function testGameAction()
     {
         $client = static::createClient(array(), array(
-            'HTTP_X-Hangman-Token' => 'my-encrypted-token'
+            'HTTP_X-Hangman-Token' => 'my-encrypted-token-hash'
         ));
 
         $client->request('POST', '/api/games');
@@ -79,7 +79,7 @@ class GameControllerTest extends WebTestCase
     public function testErrorResponse()
     {
         $client = static::createClient(array(), array(
-            'HTTP_X-Hangman-Token' => 'my-encrypted-token'
+            'HTTP_X-Hangman-Token' => 'my-encrypted-token-hash'
         ));
 
         $client->request('PUT', '/api/games/non-existent', array(
