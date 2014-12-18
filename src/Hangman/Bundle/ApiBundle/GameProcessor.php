@@ -32,45 +32,6 @@ class GameProcessor
     }
 
     /**
-     * Validates that the right preconditions have been met to process the Game.
-     *
-     * @param Game $game
-     * @param null $character
-     *
-     * @return array|bool|View
-     */
-    protected function validate(Game $game = null, $character = null)
-    {
-        // A corresponding Game must have been found
-        if ($game === null) {
-            throw new GameNotFoundException(
-                404, 'Sorry, that game does not exist'
-            );
-        }
-
-        // Exactly one character may be submitted
-        if (!preg_match('/^[a-z]{1}$/i', $character)) {
-            throw new InvalidCharacterException(
-                403, 'Sorry, that was an invalid character'
-            );
-        }
-
-        // No more tries left.
-        if ($game->getTriesLeft() === 0) {
-            throw new TriesDepletedException(
-                403, 'Sorry, there are no more tries left on this game'
-            );
-        }
-
-        // Character has already been submitted before.
-        if (in_array($character, $game->getCharactersGuessed())) {
-            throw new CharacterNotNewException(
-                403, 'Sorry, you already used that character'
-            );
-        }
-    }
-
-    /**
      * Processes a game entry submission.
      *
      * @param Game   $game
@@ -116,5 +77,44 @@ class GameProcessor
         $game->setWord(preg_replace($patternReverse, '.', $game->getWord()));
 
         return $game;
+    }
+
+    /**
+     * Validates that the right preconditions have been met to process the Game.
+     *
+     * @param Game $game
+     * @param null $character
+     *
+     * @return array|bool|View
+     */
+    protected function validate(Game $game = null, $character = null)
+    {
+        // A corresponding Game must have been found
+        if ($game === null) {
+            throw new GameNotFoundException(
+                404, 'Sorry, that game does not exist'
+            );
+        }
+
+        // Exactly one character may be submitted
+        if (!preg_match('/^[a-z]{1}$/i', $character)) {
+            throw new InvalidCharacterException(
+                403, 'Sorry, that was an invalid character'
+            );
+        }
+
+        // No more tries left.
+        if ($game->getTriesLeft() === 0) {
+            throw new TriesDepletedException(
+                403, 'Sorry, there are no more tries left on this game'
+            );
+        }
+
+        // Character has already been submitted before.
+        if (in_array($character, $game->getCharactersGuessed())) {
+            throw new CharacterNotNewException(
+                403, 'Sorry, you already used that character'
+            );
+        }
     }
 }
