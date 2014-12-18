@@ -17,31 +17,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class GameController extends Controller
 {
     /**
-     * Simple authentication mechanism.
-     *
-     * Normally, on more elaborate APIs, we would want to use an implementation
-     * of Symfony's SimplePreAuthenticatorInterface. However, given the
-     * simplicity of this API, this method suffices for now.
-     *
-     * @param Request $request
-     *
-     * @return bool
-     */
-    protected function authenticate(Request $request)
-    {
-        $token = $request->headers->get('X-Hangman-Token');
-        $consumer = $this->getDoctrine()->getManager()
-            ->getRepository('HangmanDatastoreBundle:ORM\Consumer')
-            ->findByToken($token);
-
-        if (empty($consumer)) {
-            throw new InvalidTokenException(
-                403, 'Invalid authentication token.'
-            );
-        }
-    }
-
-    /**
      * Create a new game.
      *
      * @ApiDoc(
@@ -117,5 +92,30 @@ class GameController extends Controller
             ->process($game, $character);
 
         return View::create($game, 200);
+    }
+
+    /**
+     * Simple authentication mechanism.
+     *
+     * Normally, on more elaborate APIs, we would want to use an implementation
+     * of Symfony's SimplePreAuthenticatorInterface. However, given the
+     * simplicity of this API, this method suffices for now.
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    protected function authenticate(Request $request)
+    {
+        $token = $request->headers->get('X-Hangman-Token');
+        $consumer = $this->getDoctrine()->getManager()
+            ->getRepository('HangmanDatastoreBundle:ORM\Consumer')
+            ->findByToken($token);
+
+        if (empty($consumer)) {
+            throw new InvalidTokenException(
+                403, 'Invalid authentication token.'
+            );
+        }
     }
 }
