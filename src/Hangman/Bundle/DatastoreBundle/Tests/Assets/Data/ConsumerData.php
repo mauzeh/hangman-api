@@ -20,7 +20,7 @@ class ConsumerData implements FixtureInterface
     {
         return array(
             array(
-                'token' => 'my-token',
+                'token' => 'my-encrypted-token',
             ),
         );
     }
