@@ -2,7 +2,9 @@
 
 # Hangman API #
 
-This repository contains a minimal implementation of a hangman API.
+This repository contains a minimal implementation of a hangman API. This implementation was made for demonstration purposes.
+ 
+The intended audience of this repository is code reviewers and technical recruiters.
 
 ## Installation and testing ##
 
